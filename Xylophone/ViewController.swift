@@ -19,8 +19,8 @@ class ViewController: UIViewController {
         
     }
     
-    func playSound(note sound: String){
-        guard let sound = Bundle.main.path(forResource: "C", ofType: "wav") else {
+    func playSound(note noteSound: String){
+        guard let sound = Bundle.main.path(forResource: noteSound, ofType: "wav") else {
             print("Error getting the wav file from the main bundle.")
             return
         }
@@ -35,9 +35,20 @@ class ViewController: UIViewController {
 
 
     @IBAction func keyPressed(_ sender: UIButton) {
-        playSound(note: "C")
+        changeButtonOpacity(buttonPressed: sender)
+        let musicalNotePressed: String = sender.titleLabel?.text ?? "C"
+        playSound(note: musicalNotePressed)
     }
     
+    func changeButtonOpacity(buttonPressed: UIButton){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 )
+                {
+                    UIView.animate(withDuration: 0.3)
+                    {
+                        buttonPressed.alpha = 1.0
+                    }
+                }
+    }
 
 }
 
